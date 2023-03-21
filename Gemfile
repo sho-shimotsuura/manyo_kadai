@@ -14,6 +14,8 @@ gem 'bootsnap', '>= 1.4.4', require: false
 gem 'net-smtp'
 gem 'net-imap'
 gem 'net-pop'
+gem 'kaminari'
+gem 'bootstrap-sass', '~> 3.3.6'
 
 
 group :development, :test do
@@ -21,6 +23,9 @@ group :development, :test do
   gem 'rspec-rails', '~> 4.0.1'
   gem 'factory_bot_rails'
   gem 'rexml'
+  gem 'pry-rails'
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 group :development do

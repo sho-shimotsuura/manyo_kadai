@@ -1,27 +1,49 @@
-<h1>タスク一覧</h1>
+<h1 class="my-3">タスク一覧</h1>
 
 <p><%= notice %></p>
 
-<table>
-  <tr>
-    <th>タスク名</th>
-    <th>タスク詳細</th>
-    <th>タスク作成日時</th>
-  </tr>
+<table class="table table-hover">
+  <thead>
+    <tr>
+      <th scope="col">タスク名</th>
+      <th scope="col">タスク詳細</th>
+      <th scope="col">タスク作成日時</th>
+      <th scope="col">締切</th>
+      <th scope="col">ステータス</th>
+      <th scope="col">優先順位</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>  
 
-<% @tasks.each do |task| %>
-  <tr class="task_row">
-    <td><%= task.name %></td>
-    <td><%= task.content %></td>
-    <td><%= task.created_at %></td>
-    <td><%= link_to '詳細を確認する', task_path(task.id) %></td>
-    <td><%= link_to 'タスクを編集する', edit_task_path(task.id) %></td>
-    <td><%= link_to 'タスクを削除する', task_path(task.id), method: :delete ,data: { confirm: '本当に削除していいですか？' } %></td>
-  </tr>
-<% end %>
+  <tbody>
+    <% @tasks.each do |task| %>
+      <tr class="task_row">
+        <td><%= task.name %></td>
+        <td><%= task.content %></td>
+        <td><%= task.created_at %></td>
+        <td><%= task.deadline %></td>
+        <td><%= task.status %></td>
+        <td><%= task.priority %></td>
+        <td><%= link_to '詳細', task_path(task.id), class: "btn btn-outline-secondary" %></td>
+        <td><%= link_to '編集', edit_task_path(task.id), class: "btn btn-outline-secondary" %></td>
+        <td><%= link_to '削除', task_path(task.id), method: :delete ,data: { confirm: '本当に削除していいですか？' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
 </table>
+
+<td><button type="button" class="btn-secondary"><%= link_to '新規作成画面', new_task_path %></button><br>
+<td><button type="button" class="btn-secondary"><%= link_to "終了期限でソートする", tasks_path(sort_deadline: "true") %></button></td><br>
+<td><button type="button" class="btn-secondary"><%= link_to "優先順位でソートする", tasks_path(sort_priority: "true") %></button></td><br>
+
+<%= paginate @tasks %>
 
 <br>
 
-<%= link_to '新規作成画面へ', new_task_path %>
 
+<%= form_with(scope: :task, url: tasks_path, method: :get, local: true) do |form| %>
+  <%= form.label :name, 'キーワードで検索' %>
+  <%= form.text_field :name %><br>
+  <%= form.select :status, [["未着手", "0"], ["着手中", "1"], ["完了", "2"]], include_blank: "選択して下さい" %>
+  <%= form.submit '検索' %><br>
+<% end %>
