@@ -1,8 +1,9 @@
 class Task < ApplicationRecord
+  belongs_to :user
   validates :name, presence: true
   validates :content, presence: true
   enum status:{未着手:0,着手中:1,完了:2}
-  scope :sort_deadline, -> {order(deadline: :desc)}
+  scope :sort_deadline, -> {order(deadline: :asc)}
   enum priority:{高:0,中:1,低:2}
   scope :sort_priority, -> {order(priority: :asc)}
 

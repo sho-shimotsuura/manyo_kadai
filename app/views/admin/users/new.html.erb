@@ -1,0 +1,28 @@
+<%= form_with(model: @user, url: admin_users_path) do |f| %>
+  <% if @user.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+      <ul>
+        <% user.errors.each do |error| %>
+          <li><%= error.full_message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+<h3>Create New User</h3>
+    <div><%= f.label :name %> </div>
+    <div><%= f.text_field :name %></div>
+    <div><%= f.label :email %></div>
+    <div><%= f.email_field :email %></div>
+    <div><%= f.label :password %></div>
+    <div><%= f.password_field :password %></div>
+    <div><%= f.label :password_confirmation %></div>
+    <div><%= f.password_field :password_confirmation %></div>
+    <div><%= f.label :administrator %>
+      <%= f.radio_button :admin, :true %>
+    </div>
+    <div><%= f.label :general%>
+      <%= f.radio_button :admin, :false %>
+    </div>
+    <div class = "btn"><%= f.submit "Create account" %></div>
+<% end %>

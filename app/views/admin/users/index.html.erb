@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h2>管理者ページ</h2>
+<h4>ユーザー一覧</h4>
+
+<table>
+  <thead>
+    <tr>
+    <th>ユーザー名</th>
+    <th>メールアドレス</th>
+    <th>管理者権限</th>
+    <th>登録タスク数</th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.admin %></td>
+        <td><%= user.tasks.count %></td>
+        <td><%= link_to 'show', admin_user_path(user) %></td>
+        <td><%= link_to 'Edit', edit_admin_user_path(user) %></td>
+        <td><%= link_to 'Delete', admin_user_path(user), method: :delete, data: { confirm: '削除しますか?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+<%= link_to 'Create New User', new_admin_user_path %>
