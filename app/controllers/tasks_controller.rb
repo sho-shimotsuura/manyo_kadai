@@ -1,7 +1,7 @@
 class TasksController < ApplicationController
   before_action :set_task, only: [:show, :edit, :update, :destroy]
   def index
-    @tasks = Task.all.order(created_at: :desc).page(params[:page]).per(5)
+    @tasks = current_user.tasks.order(created_at: :desc).page(params[:page]).per(5)
     @tasks = Task.all.sort_deadline.page(params[:page]).per(5) if params[:sort_deadline] #sort_deadlineはモデルで定義
     @tasks = Task.all.sort_priority.page(params[:page]).per(5) if params[:sort_priority] #sort_priorityはモデルで定義
     
@@ -23,6 +23,7 @@ class TasksController < ApplicationController
 
   def create
     @task = Task.new(task_params)
+    @task.user_id = current_user.id
     if @task.save
       redirect_to tasks_path, notice: "タスクを作成しました"
     else
