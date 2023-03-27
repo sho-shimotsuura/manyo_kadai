@@ -17,6 +17,7 @@ gem 'net-pop'
 gem 'kaminari'
 gem 'bootstrap-sass', '~> 3.3.6'
 gem 'bcrypt'
+gem 'faker'
 
 
 group :development, :test do

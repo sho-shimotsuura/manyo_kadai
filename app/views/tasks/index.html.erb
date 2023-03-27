@@ -28,6 +28,11 @@
         <td><%= link_to '詳細', task_path(task.id), class: "btn btn-outline-secondary" %></td>
         <td><%= link_to '編集', edit_task_path(task.id), class: "btn btn-outline-secondary" %></td>
         <td><%= link_to '削除', task_path(task.id), method: :delete ,data: { confirm: '本当に削除していいですか？' } %></td>
+        <td>
+          <% task.labels.each do |label| %>
+            <%= label.label_title %>
+          <% end %>
+        </td>
       </tr>
     <% end %>
   </tbody>
@@ -45,6 +50,8 @@
 <%= form_with(scope: :task, url: tasks_path, method: :get, local: true) do |form| %>
   <%= form.label :name, 'キーワードで検索' %>
   <%= form.text_field :name %><br>
-  <%= form.select :status, [["未着手", "0"], ["着手中", "1"], ["完了", "2"]], include_blank: "選択して下さい" %>
+  <%= form.select :status, [["未着手", "0"], ["着手中", "1"], ["完了", "2"]], include_blank: "選択して下さい" %><br>
+  <%= form.label :ラベル名 %>
+  <%= form.text_field :label_title, placeholder: "ラベルで検索する" %>
   <%= form.submit '検索' %><br>
 <% end %>

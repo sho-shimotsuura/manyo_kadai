@@ -10,4 +10,8 @@ class Task < ApplicationRecord
   scope :search_name, -> (name){where('name LIKE ?', "%#{name}%")}
   scope :search_status, -> (status){where(status: status)}
   scope :search_name_status, -> (name, status){where('name LIKE ?',"%#{name}%").where(status: status)}
+  scope :search_label, ->(label_title) { Label.find_by(label_title: label_title).tasks }
+  #scope :search_label, -> (label_ids){ where(id: TaskLabel.where(label_id: label_ids).pluck(:task_id)) if label_ids.present?}
+  has_many :task_labels, dependent: :destroy
+  has_many :labels, through: :task_labels, source: :label
 end
