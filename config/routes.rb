@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
   resources :sessions
+  resources :labels
   resources :users
   namespace :admin do
     resources :users
